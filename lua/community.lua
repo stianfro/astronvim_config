@@ -7,7 +7,12 @@ if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 ---@type LazySpec
 return {
   "AstroNvim/astrocommunity",
+  -- packs
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.typescript" },
+
+  -- recipes
+  { import = "astrocommunity.recipes.vscode" },
+
   -- import/override with your plugins folder
 }
