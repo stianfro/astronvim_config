@@ -37,6 +37,7 @@ return {
         -- configure global vim variables (vim.g)
         -- NOTE: `mapleader` and `maplocalleader` must be set in the AstroNvim opts or before `lazy.setup`
         -- This can be found in the `lua/lazy_setup.lua` file
+        VM_theme = "ocean",
       },
     },
     -- Mappings can be configured through AstroCore as well.
@@ -64,7 +65,8 @@ return {
         ["<Leader>b"] = { desc = "Buffers" },
         -- quick save
         -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
-        ["<C-n>"] = { ":%s/<C-r><C-w>//gc<Left><Left><Left>", desc = "Replace word under cursor" },
+        -- replace word
+        -- ["<C-n>"] = { ":%s/<C-r><C-w>//gc<Left><Left><Left>", desc = "Replace word under cursor" },
       },
       t = {
         -- setting a mapping to false will disable it
