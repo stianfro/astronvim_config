@@ -67,6 +67,14 @@ return {
         -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
         -- replace word
         -- ["<C-n>"] = { ":%s/<C-r><C-w>//gc<Left><Left><Left>", desc = "Replace word under cursor" },
+        ["<F4>"] = {
+          function()
+            -- This will run `cargo run` in the terminal. Adjust the command as necessary.
+            vim.cmd "split | terminal cargo run -q"
+            -- If you want to run `cargo run` specifically on the current file's directory, you might need a more complex function to change the directory accordingly.
+          end,
+          desc = "Run Cargo on Current File",
+        },
       },
       t = {
         -- setting a mapping to false will disable it
