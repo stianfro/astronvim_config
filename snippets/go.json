@@ -1,0 +1,19 @@
+{
+  "errspan": {
+    "prefix": [
+      "errspan",
+      "ifes"
+    ],
+    "body": [
+      "if err != nil {",
+      "\tmessage := \"$1\"",
+      "\tlog.Error(err, message)",
+      "\t",
+      "\tspan.SetStatus(codes.Error, message)",
+      "\tspan.RecordError(err)",
+      "\treturn err",
+      "}"
+    ],
+    "description": "Stian's go snippets"
+  }
+}
