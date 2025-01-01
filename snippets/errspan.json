@@ -1,9 +1,6 @@
 {
   "errspan": {
-    "prefix": [
-      "errspan",
-      "ifes"
-    ],
+    "prefix": ["errspan", "ifes"],
     "body": [
       "if err != nil {",
       "\tmessage := \"$1\"",
@@ -14,6 +11,6 @@
       "\treturn err",
       "}"
     ],
-    "description": "Stian's go snippets"
+    "description": "Handle error with span"
   }
 }
