@@ -1,0 +1,13 @@
+{
+  "multitest": {
+    "prefix": ["multitest", "teststruct"],
+    "body": [
+      "tests := []struct {",
+      "\tname string",
+      "\tinput string",
+      "\twant string",
+      "}"
+    ],
+    "description": "Struct with multiple test inputs"
+  }
+}
