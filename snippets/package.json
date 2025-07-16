@@ -11,6 +11,10 @@
       },
       {
         "language": "go",
+        "path": "./iferr.json"
+      },
+      {
+        "language": "go",
         "path": "./multitest.json"
       }
     ]
