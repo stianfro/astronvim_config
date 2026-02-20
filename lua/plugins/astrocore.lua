@@ -29,8 +29,8 @@ return {
         number = true, -- sets vim.opt.number
         spell = false, -- sets vim.opt.spell
         signcolumn = "auto", -- sets vim.opt.signcolumn to auto
-        wrap = false, -- sets vim.opt.wrap
-        clipboard = "",
+        wrap = true, -- sets vim.opt.wrap
+        -- clipboard = "",
         conceallevel = 2,
         shiftwidth = 2,
         tabstop = 2,
