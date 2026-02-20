@@ -1,0 +1,7 @@
+{
+  "k-namespace": {
+    "prefix": ["namespace", "ns"],
+    "body": ["apiVersion: v1", "kind: Namespace", "metadata:", "\tname: $1"],
+    "description": "Kubernetes Namespace"
+  }
+}

@@ -16,6 +16,10 @@
       {
         "language": "go",
         "path": "./multitest.json"
+      },
+      {
+        "language": "yaml",
+        "path": "./k-namespace.json"
       }
     ]
   }

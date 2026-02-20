@@ -3,6 +3,28 @@
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
 --       as this provides autocomplete and documentation while editing
 
+local function toggle_lazygit()
+  local astro = require "astrocore"
+  local lazygit = vim.fn.exepath "lazygit"
+  if lazygit == "" then
+    astro.notify("lazygit not found in PATH", vim.log.levels.ERROR)
+    return
+  end
+
+  local current = vim.api.nvim_buf_get_name(0)
+  local start_dir = vim.fn.getcwd()
+  if current ~= "" then
+    local stat = (vim.uv or vim.loop).fs_stat(current)
+    if stat and stat.type == "file" then start_dir = vim.fs.dirname(current) or start_dir end
+  end
+
+  local git_root = astro.cmd({ "git", "-C", start_dir, "rev-parse", "--show-toplevel" }, false)
+  local term_opts = { cmd = lazygit, direction = "float" }
+  if git_root then term_opts.dir = vim.trim(git_root) end
+
+  astro.toggle_term_cmd(term_opts)
+end
+
 ---@type LazySpec
 return {
   "AstroNvim/astrocore",
@@ -13,7 +35,7 @@ return {
       large_buf = { size = 1024 * 500, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
       autopairs = true, -- enable autopairs at start
       cmp = true, -- enable completion at start
-      diagnostics_mode = 3, -- diagnostic mode on start (0 = off, 1 = no signs/virtual text, 2 = no virtual text, 3 = on)
+      diagnostics = { virtual_text = true, virtual_lines = false }, -- diagnostic settings on startup
       highlighturl = true, -- highlight URLs at start
       notifications = true, -- enable notifications at start
     },
@@ -22,6 +44,10 @@ return {
       virtual_text = true,
       underline = true,
     },
+    -- passed to `vim.filetype.add`
+    filetypes = {
+      -- see `:h vim.filetype.add` for usage
+    },
     -- vim options can be configured here
     options = {
       opt = { -- vim.opt.<key>
@@ -29,8 +55,7 @@ return {
         number = true, -- sets vim.opt.number
         spell = false, -- sets vim.opt.spell
         signcolumn = "auto", -- sets vim.opt.signcolumn to auto
-        wrap = false, -- sets vim.opt.wrap
-        clipboard = "",
+        wrap = true, -- sets vim.opt.wrap
         conceallevel = 2,
         shiftwidth = 2,
         tabstop = 2,
@@ -54,7 +79,7 @@ return {
         H = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
 
         -- mappings seen under group name "Buffer"
-        ["<Leader>bD"] = {
+        ["<leader>bD"] = {
           function()
             require("astroui.status.heirline").buffer_picker(
               function(bufnr) require("astrocore.buffer").close(bufnr) end
@@ -62,37 +87,27 @@ return {
           end,
           desc = "Pick to close",
         },
+
         -- tables with just a `desc` key will be registered with which-key if it's installed
         -- this is useful for naming menus
-        ["<Leader>b"] = { desc = "Buffers" },
+        ["<leader>b"] = { desc = "Buffers" },
         -- quick save
-        ["<C-s>"] = { ":w!<cr>", desc = "Save File" }, -- change description but the same command
-        -- replace word
-        -- ["<C-n>"] = { ":%s/<C-r><C-w>//gc<Left><Left><Left>", desc = "Replace word under cursor" },
+        ["<C-s>"] = { ":w!<cr>", desc = "Save File" },
+
         ["<F4>"] = {
-          function()
-            -- This will run `cargo run` in the terminal. Adjust the command as necessary.
-            vim.cmd "split | terminal cargo run -q"
-            -- If you want to run `cargo run` specifically on the current file's directory, you might need a more complex function to change the directory accordingly.
-          end,
+          function() vim.cmd "split | terminal cargo run -q" end,
           desc = "Run Cargo on Current File",
         },
         ["<F3>"] = {
-          function()
-            -- This will run `go run` in the terminal. Adjust the command as necessary.
-            vim.cmd "split | terminal go run ."
-            -- If you want to run `cargo run` specifically on the current file's directory, you might need a more complex function to change the directory accordingly.
-          end,
+          function() vim.cmd "split | terminal go run ." end,
           desc = "Run Go on Current File",
         },
-        ["<Leader>P"] = {
+        ["<leader>P"] = {
           function() vim.cmd "PasteImage" end,
           desc = "Paste image from system clipboard",
         },
-      },
-      t = {
-        -- setting a mapping to false will disable it
-        -- ["<esc>"] = false,
+        ["<leader>gg"] = { toggle_lazygit, desc = "ToggleTerm lazygit" },
+        ["<leader>tl"] = { toggle_lazygit, desc = "ToggleTerm lazygit" },
       },
     },
   },

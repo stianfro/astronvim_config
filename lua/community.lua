@@ -10,8 +10,5 @@ return {
   { import = "astrocommunity.pack.typescript" },
   { import = "astrocommunity.pack.rust" },
 
-  -- recipes
-  { import = "astrocommunity.recipes.vscode" },
-
   -- import/override with your plugins folder
 }
