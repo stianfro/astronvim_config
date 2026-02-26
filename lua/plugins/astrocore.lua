@@ -92,7 +92,7 @@ return {
         -- this is useful for naming menus
         ["<leader>b"] = { desc = "Buffers" },
         -- quick save
-        ["<C-s>"] = { ":w!<cr>", desc = "Save File" },
+        ["<C-s>"] = { "<cmd>w<cr>", desc = "Save File" },
 
         ["<F4>"] = {
           function() vim.cmd "split | terminal cargo run -q" end,
@@ -108,6 +108,12 @@ return {
         },
         ["<leader>gg"] = { toggle_lazygit, desc = "ToggleTerm lazygit" },
         ["<leader>tl"] = { toggle_lazygit, desc = "ToggleTerm lazygit" },
+      },
+      i = {
+        ["<C-s>"] = { "<C-o>:w<cr>", desc = "Save File" },
+      },
+      v = {
+        ["<C-s>"] = { "<esc><cmd>w<cr>", desc = "Save File" },
       },
     },
   },

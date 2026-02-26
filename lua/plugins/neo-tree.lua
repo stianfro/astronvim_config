@@ -4,8 +4,10 @@ return {
     ---@module "neo-tree"
     ---@type neotree.Config?
     opts = {
-      mappings = {
-        n = { ["s"] = false },
+      window = {
+        mappings = {
+          ["s"] = "none",
+        },
       },
     },
   },
